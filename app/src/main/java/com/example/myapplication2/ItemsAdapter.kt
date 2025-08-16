@@ -2,9 +2,11 @@ package com.example.myapplication2
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +21,7 @@ class ItemsAdapter(var items: List<Item>, var context: Context) :
         return MyViewHolder(view)
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "DiscouragedApi")
     override fun onBindViewHolder(
         holder: MyViewHolder,
         position: Int
@@ -35,6 +37,13 @@ class ItemsAdapter(var items: List<Item>, var context: Context) :
         )
 
         holder.image.setImageResource(imageId)
+        holder.btn.setOnClickListener {
+            val intent = Intent(context, ItemActivity::class.java)
+            intent.putExtra("itemTitle", items[position].title)
+            intent.putExtra("itemText", items[position].text)
+            context.startActivity(intent)
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -46,6 +55,7 @@ class ItemsAdapter(var items: List<Item>, var context: Context) :
         val title: TextView = view.findViewById(R.id.item_list_title)
         val desc: TextView = view.findViewById(R.id.item_list_desc)
         val price: TextView = view.findViewById(R.id.item_list_price)
+        val btn: Button = view.findViewById(R.id.item_list_button)
     }
 
 }
